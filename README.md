@@ -21,6 +21,7 @@ for col in binary_columns:
 ```
         
 **소수점 컬럼 -> int64**
+```
 for col in numeric_columns:
 
     if col in train.columns:
@@ -34,9 +35,10 @@ for col in numeric_columns:
             pd.to_numeric(test[col], errors="coerce")
             .astype("Int64")
         )
+```
 
 **횟수 컬럼** 
-
+```
 for col in count_columns:
 
     if col in train.columns:
@@ -52,9 +54,9 @@ for col in count_columns:
             .map(count_map)
             .astype("Int64")
         )
-        
+```    
 **특정 시술 유형 Feature engineering**
-
+```
 for df in [train, test]:
 
     # -------------------------
@@ -139,11 +141,12 @@ for df in [train, test]:
         .astype("Int64")
     )
 
-
+```
 <details>
 <summary><b>1차 베이스라인 구축 코드 요약</b></summary>
 
 **XGBoost**
+```
 import xgboost as xgb
 from sklearn.metrics import roc_auc_score
 
@@ -160,8 +163,9 @@ model.fit(X_train, y_train, eval_set=[(X_valid, y_valid)], verbose=False)
 
 valid_pred = model.predict_proba(X_valid)[:, 1]
 print('Validation ROC-AUC:', roc_auc_score(y_valid, valid_pred))
-
+```
 **CatBoost**
+```
 from sklearn.metrics import roc_auc_score
 
 model = CatBoostClassifier(
@@ -185,8 +189,9 @@ model.fit(
 pred = model.predict_proba(X_valid)[:, 1]
 
 auc = roc_auc_score(y_valid, pred)
-
+```
 **LGBM**
+```
 base_clf = LGBMClassifier(
     random_state=42,
     verbose=-1
@@ -195,4 +200,4 @@ base_clf = LGBMClassifier(
 # 1차 모델 학습 시작
 base_clf.fit(X_train, y_train)
 print("1차 모델링 학습 완료!\n")
-
+```
