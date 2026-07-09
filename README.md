@@ -34,6 +34,7 @@ for col in numeric_columns:
         )
 
 **횟수 컬럼** 
+
 for col in count_columns:
 
     if col in train.columns:
@@ -51,6 +52,7 @@ for col in count_columns:
         )
         
 **특정 시술 유형 Feature engineering**
+
 for df in [train, test]:
 
     # -------------------------
